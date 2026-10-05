@@ -1,12 +1,20 @@
 # Tuval Studio MCP Server 🎨
+### The Graphic Design MCP, AI Design MCP & PDF Generator MCP for AI Agents
 
 [![npm version](https://img.shields.io/npm/v/@ariferol01/tuval-studio-mcp.svg)](https://www.npmjs.com/package/@ariferol01/tuval-studio-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
+[![Model Context Protocol](https://img.shields.io/badge/MCP-Registry-purple.svg)](https://modelcontextprotocol.io)
 
-Official **Model Context Protocol (MCP)** server for **Tuval Studio** ([tuval.site](https://tuval.site)).
+**Tuval Studio MCP** is the official **MCP server** for **Tuval Studio** ([tuval.site](https://tuval.site)).
 
-Enables desktop AI agents (**Claude Desktop, Cursor, OpenCode, Roo-Code, Cline, Windsurf, CodeDL**) to connect directly to your open browser canvas for **autonomous vision-in-the-loop graphic design**, vector editing, and **multi-page print-ready PDF catalog generation** with 100% client-side privacy.
+It empowers desktop **AI agents** — including **Claude Desktop**, **Cursor**, **Codex**, **Antigravity**, **Windsurf**, **Cline**, **Roo-Code**, and **OpenCode** — with an autonomous, vision-guided design engine for:
+- 🎨 **Graphic Design MCP & AI Design MCP:** Automated vector composition, typography, mesh gradients, and smart layout audits.
+- 📄 **PDF Generator MCP & Catalog Generator:** Multi-page PDF catalog generation, magazine layouts, brochures, and pitch decks.
+- 📊 **Presentation Generator & Slide Decks:** High-resolution multi-page slide creation with synchronized typography and consistent visual branding.
+- 📱 **Social Media Design:** 1-click marketing banners, Instagram stories, YouTube thumbnails, and ads with zero text overflow.
+
+> Looking for a **design MCP**, **PDF MCP**, **catalog MCP**, or **graphic design MCP**? Tuval Studio MCP connects your AI agent directly to an interactive, client-side browser canvas with 100% privacy and real-time visual feedback!
 
 ---
 
@@ -21,9 +29,9 @@ Enables desktop AI agents (**Claude Desktop, Cursor, OpenCode, Roo-Code, Cline, 
 
 ---
 
-## ⚡ Quick Setup
+## ⚡ Quick Setup for AI Agents
 
-Add the following configuration to your AI agent's MCP settings file:
+Add the configuration below to your AI agent's MCP settings file:
 
 ### 1. Claude Desktop (`claude_desktop_config.json`)
 ```json
@@ -37,7 +45,7 @@ Add the following configuration to your AI agent's MCP settings file:
 }
 ```
 
-### 2. Cursor / Windsurf / Cline / Roo-Code / OpenCode / CodeDL
+### 2. Cursor, Codex, Antigravity, Windsurf, Cline & Roo-Code
 ```json
 {
   "mcpServers": {
@@ -112,17 +120,24 @@ Add the following configuration to your AI agent's MCP settings file:
 
 ---
 
-## 🎯 Example Prompts for AI Agents
+## 🎯 Example Prompts for AI Agents (Claude, Cursor, Codex, Antigravity)
 
-### Multi-Page Product Catalog Example
-> *"Create a 4-page modern Scandinavian furniture catalog on Tuval Studio. Design an editorial cover on Page 1, a product grid with pricing on Pages 2 and 3, and contact/order details on Page 4. Inspect each page for safe margins and export the final multi-page PDF."*
+### 1. Multi-Page Product Catalog & PDF Generation
+> *"Use Tuval Studio MCP to create a 4-page modern Scandinavian furniture catalog. Design an editorial cover on Page 1, a product grid with pricing on Pages 2 and 3, and contact/order details on Page 4. Inspect each page with vision audit for safe margins and export the final multi-page PDF."*
 
-### Social Media Banner Example
-> *"Design a high-contrast Cyberpunk sale banner (1080x1080) for a tech launch. Use dark background gradients, bold headline typography, neon accent badges, and clean spacing. Verify with visual feedback that no text overflows."*
+### 2. Social Media Design & Banner Generation
+> *"Design a high-contrast Cyberpunk social media ad banner (1080x1080) for a product launch. Apply dark gradient backgrounds, bold typography, neon callout badges, and verify with design_audit_layout that no text overflows boundaries."*
+
+### 3. Presentation Generator & Pitch Decks
+> *"Build a 5-slide pitch deck presentation in Tuval Studio. Maintain brand colors, modern typography hierarchy, clean card layouts, and export the entire deck as a print-ready PDF."*
+
+---
+
+## 🔍 Tags & Keywords
+`Tuval Studio MCP` · `MCP server` · `graphic design MCP` · `AI design MCP` · `PDF generator MCP` · `PDF MCP` · `design MCP` · `catalog MCP` · `catalog generator` · `presentation generator` · `social media design` · `AI agents` · `Claude` · `Cursor` · `Codex` · `Antigravity`
 
 ---
 
 ## 📄 License
 
 MIT © [Tuval Studio](https://tuval.site)
-

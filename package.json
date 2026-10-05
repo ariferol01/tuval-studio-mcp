@@ -1,13 +1,14 @@
 {
   "name": "@ariferol01/tuval-studio-mcp",
-  "version": "1.0.5",
-  "description": "Official MCP Server for Tuval Graphic Studio on tuval.site — Vision-in-the-loop AI Design Automation & Multi-Page PDF Catalogs",
+  "version": "1.0.6",
+  "mcpName": "io.github.ariferol01/tuval-studio",
+  "description": "Tuval Studio MCP — The Graphic Design MCP, AI Design MCP & PDF Generator MCP server for AI agents (Claude, Cursor, Codex, Antigravity). Autonomous catalog generator, presentation generator & social media design on tuval.site.",
   "main": "bundle.mjs",
   "type": "module",
   "homepage": "https://tuval.site",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ariferol01/tuval-studio-mcp.git"
+    "url": "git+https://github.com/ariferol01/tuval-studio-mcp.git"
   },
   "bugs": {
     "url": "https://github.com/ariferol01/tuval-studio-mcp/issues"
@@ -23,15 +24,28 @@
     "start": "node bundle.mjs"
   },
   "keywords": [
+    "tuval-studio-mcp",
     "mcp",
+    "mcp-server",
     "model-context-protocol",
+    "graphic-design-mcp",
+    "ai-design-mcp",
+    "pdf-generator-mcp",
+    "pdf-mcp",
+    "design-mcp",
+    "catalog-mcp",
+    "catalog-generator",
+    "presentation-generator",
+    "social-media-design",
+    "ai-agents",
+    "claude",
+    "cursor",
+    "codex",
+    "antigravity",
     "tuval",
-    "tuval-site",
-    "graphics",
-    "editor",
-    "ai-design",
-    "pdf-catalog",
-    "fabricjs"
+    "graphic-design",
+    "fabricjs",
+    "pdf-catalog"
   ],
   "author": "Tuval Studio (tuval.site)",
   "license": "MIT",
