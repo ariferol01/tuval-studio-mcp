@@ -1,6 +1,6 @@
 {
   "name": "@ariferol01/tuval-studio-mcp",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "mcpName": "io.github.ariferol01/tuval-studio",
   "description": "Tuval Studio MCP — The Graphic Design MCP, AI Design MCP & PDF Generator MCP server for AI agents (Claude, Cursor, Codex, Antigravity). Autonomous catalog generator, presentation generator & social media design on tuval.site.",
   "main": "bundle.mjs",
