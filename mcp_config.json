@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "tuval-studio": {
+      "command": "node",
+      "args": [
+        "g:/xampp/htdocs/graph-tool/mcp-server/index.js"
+      ],
+      "env": {}
+    }
+  }
+}

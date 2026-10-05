@@ -1,0 +1,3 @@
+@echo off
+echo Starting Tuval Studio MCP Server...
+node index.js

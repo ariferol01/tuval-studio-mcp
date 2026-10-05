@@ -1,0 +1,46 @@
+{
+  "name": "@ariferol01/tuval-studio-mcp",
+  "version": "1.0.5",
+  "description": "Official MCP Server for Tuval Graphic Studio on tuval.site — Vision-in-the-loop AI Design Automation & Multi-Page PDF Catalogs",
+  "main": "bundle.mjs",
+  "type": "module",
+  "homepage": "https://tuval.site",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ariferol01/tuval-studio-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ariferol01/tuval-studio-mcp/issues"
+  },
+  "bin": {
+    "tuval-studio-mcp": "./bundle.mjs"
+  },
+  "files": [
+    "bundle.mjs",
+    "README.md"
+  ],
+  "scripts": {
+    "start": "node bundle.mjs"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "tuval",
+    "tuval-site",
+    "graphics",
+    "editor",
+    "ai-design",
+    "pdf-catalog",
+    "fabricjs"
+  ],
+  "author": "Tuval Studio (tuval.site)",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.6.0",
+    "ws": "^8.18.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}

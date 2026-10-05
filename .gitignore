@@ -1,0 +1,6 @@
+node_modules/
+npx-check-tmp.mjs
+npx103-check-tmp.mjs
+*.log
+.DS_Store
+Thumbs.db
