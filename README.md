@@ -8,7 +8,7 @@
 
 **Tuval Studio MCP** is the official **MCP server** for **Tuval Studio** ([tuval.site](https://tuval.site)).
 
-It empowers desktop **AI agents** — including **Claude Desktop**, **Cursor**, **Codex**, **Antigravity**, **Windsurf**, **Cline**, **Roo-Code**, and **OpenCode** — with an autonomous, vision-guided design engine for:
+It empowers desktop **AI agents** — including **CodeDL**, **Claude Desktop**, **Cursor**, **Codex**, **Antigravity**, **Windsurf**, **Cline**, **Roo-Code**, and **OpenCode** — with an autonomous, vision-guided design engine for:
 - 🎨 **Graphic Design MCP & AI Design MCP:** Automated vector composition, typography, mesh gradients, and smart layout audits.
 - 📄 **PDF Generator MCP & Catalog Generator:** Multi-page PDF catalog generation, magazine layouts, brochures, and pitch decks.
 - 📊 **Presentation Generator & Slide Decks:** High-resolution multi-page slide creation with synchronized typography and consistent visual branding.
@@ -45,7 +45,7 @@ Add the configuration below to your AI agent's MCP settings file:
 }
 ```
 
-### 2. Cursor, Codex, Antigravity, Windsurf, Cline & Roo-Code
+### 2. CodeDL, Cursor, Codex, Antigravity, Windsurf, Cline & Roo-Code
 ```json
 {
   "mcpServers": {
@@ -120,7 +120,7 @@ Add the configuration below to your AI agent's MCP settings file:
 
 ---
 
-## 🎯 Example Prompts for AI Agents (Claude, Cursor, Codex, Antigravity)
+## 🎯 Example Prompts for AI Agents (CodeDL, Claude, Cursor, Codex, Antigravity)
 
 ### 1. Multi-Page Product Catalog & PDF Generation
 > *"Use Tuval Studio MCP to create a 4-page modern Scandinavian furniture catalog. Design an editorial cover on Page 1, a product grid with pricing on Pages 2 and 3, and contact/order details on Page 4. Inspect each page with vision audit for safe margins and export the final multi-page PDF."*
@@ -134,7 +134,7 @@ Add the configuration below to your AI agent's MCP settings file:
 ---
 
 ## 🔍 Tags & Keywords
-`Tuval Studio MCP` · `MCP server` · `graphic design MCP` · `AI design MCP` · `PDF generator MCP` · `PDF MCP` · `design MCP` · `catalog MCP` · `catalog generator` · `presentation generator` · `social media design` · `AI agents` · `Claude` · `Cursor` · `Codex` · `Antigravity`
+`Tuval Studio MCP` · `MCP server` · `graphic design MCP` · `AI design MCP` · `PDF generator MCP` · `PDF MCP` · `design MCP` · `catalog MCP` · `catalog generator` · `presentation generator` · `social media design` · `AI agents` · `CodeDL` · `Claude` · `Cursor` · `Codex` · `Antigravity`
 
 ---
 
