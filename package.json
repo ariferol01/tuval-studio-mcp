@@ -18,7 +18,8 @@
   },
   "files": [
     "bundle.mjs",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "start": "node bundle.mjs"
