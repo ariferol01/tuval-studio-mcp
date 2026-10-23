@@ -43,6 +43,26 @@ const require = __createRequire(import.meta.url);
 
   fs.writeFileSync('bundle.mjs', filtered.join('\n'), 'utf8');
   console.log('✅ bundle.mjs built successfully.');
+
+  console.log('Bundling mcp-server/index.js -> bundle.cjs...');
+  await esbuild.build({
+    entryPoints: ['index.js'],
+    bundle: true,
+    platform: 'node',
+    target: 'node18',
+    format: 'cjs',
+    outfile: 'bundle.cjs',
+    alias: {
+      'zod/v4': zodShimPath,
+      'zod/v4-mini': zodShimPath,
+      'zod/v3': zodShimPath,
+      'zod': zodShimPath
+    },
+    banner: {
+      js: `#!/usr/bin/env node\n`
+    }
+  });
+  console.log('✅ bundle.cjs built successfully.');
 }
 
 build().catch(err => {

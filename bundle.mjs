@@ -18640,19 +18640,22 @@ mcpServer.setRequestHandler(GetPromptRequestSchema, async (request) => {
           role: "user",
           content: {
             type: "text",
-            text: `You are a world-class graphic designer using Tuval Studio MCP.
+            text: `You are a world-class graphic designer and visionary art director using Tuval Studio MCP.
 
-TASK: Design a stunning, professional graphic for: "${topic}" in ${dim} resolution.
+TASK: Design a stunning, intricately detailed, agency-grade graphic for: "${topic}" in ${dim} resolution.
 
 PREREQUISITE:
 0. Tuval Studio must be open in the browser at https://tuval.site/editor. If the bridge is not connected, open https://tuval.site/editor in the user's browser first (e.g. using a system command like "start https://tuval.site/editor" or "open https://tuval.site/editor").
 
-CRITICAL QUALITY & VERIFICATION RULES (MANDATORY):
-1. HIERARCHY & COMPOSITION: Use clean typography, harmonious color palette, high contrast, and balanced negative space.
-2. SAFE MARGINS & BOUNDARY CHECK: Maintain at least a 5-8% safe margin (min 50px-60px padding) from all canvas edges. NO text, headlines, badges, or shapes may ever overflow or touch canvas borders.
-3. TEXT WRAPPING: If headlines or body text are long, reduce fontSize or break into multiple short lines so width fits comfortably.
-4. VISUAL INSPECTION (VISION-IN-THE-LOOP): After executing actions, carefully inspect the returned snapshot image. If you notice any clipping, misaligned elements, or overflow, immediately call "text_update_style" or "layer_transform" to correct them.
-5. FINAL CONFIRMATION: Confirm that the design is 100% verified, perfectly centered, and ready for publication.`
+CORE GRAPHIC DESIGNER PHILOSOPHY & MANDATES:
+1. ACT AS AN ELITE GRAPHIC DESIGNER: Meticulously plan, architect, and construct every single layer of the composition. Think through the entire visual narrative: atmospheric background, layered container cards, sophisticated typography pairings, and micro-accents. Never build basic or primitive layouts.
+2. MAXIMUM DETAIL, VISUAL DENSITY & QUALITY: Make the design as richly detailed, dense, and high-quality as humanly possible. Avoid bare or empty spaces. Add refined micro-details: category pill badges, decorative borders, framing accents, subtle shadows, and ornamental touches.
+3. UNCONSTRAINED BESPOKE ASSETS (NOT BOUND TO BUILT-IN SHAPES): You are NOT restricted to the studio's default primitive shapes or built-in asset inventory! You have full creative authority to synthesize, craft, and inject custom SVG vector assets, intricate decorative elements, custom icons, or geometric flourishes directly into the canvas using "svg_add" with raw SVG code (svg: "<svg ...>...</svg>"). Generate whatever modern vector assets, geometric dividers, or brand motifs are required to match the exact aesthetic vision.
+4. HIERARCHY & COMPOSITION: Use clean typography (Sora, Inter, Playfair Display, Space Grotesk, etc.), harmonious curated color palettes, high contrast, and balanced negative space.
+5. SAFE MARGINS & BOUNDARY CHECK: Maintain at least a 5-8% safe margin (min 50px-60px padding) from all canvas edges. NO text, headlines, badges, or shapes may ever overflow or touch canvas borders.
+6. TEXT WRAPPING: If headlines or body text are long, reduce fontSize or break into multiple short lines so width fits comfortably.
+7. VISUAL INSPECTION (VISION-IN-THE-LOOP): After executing actions, carefully inspect the returned snapshot image. If you notice any clipping, misaligned elements, or overflow, immediately call "text_update_style" or "layer_transform" to correct them.
+8. FINAL CONFIRMATION: Confirm that the design is 100% verified, perfectly centered, and ready for publication.`
           }
         }
       ]
@@ -18688,7 +18691,12 @@ Inspect the snapshot image and layer tree:
             type: "text",
             text: `You are an elite editorial graphic designer and publication specialist creating a multi-page PDF catalog on Tuval Studio.
 
-TASK: Design a complete, cohesive ${count}-page PDF catalog for: "${topic}".
+TASK: Design a complete, cohesive, publication-grade ${count}-page PDF catalog for: "${topic}".
+
+EDITORIAL DESIGN PRINCIPLES & CUSTOM ASSET MANDATE:
+- ACT LIKE A MASTER EDITORIAL DESIGNER: Meticulously plan every page with publication-grade craftsmanship. Make every spread dense with high-value detail, structured product grids, editorial typography, spec callouts, and brand cohesion.
+- UNBOUND CREATIVITY & BESPOKE SVG ASSETS: You are NOT limited to default primitive shapes! Freely craft and inject custom SVG vector elements, bespoke badge seals, decorative dividers, spec icons, and artistic flourishes using "svg_add" with raw SVG markup.
+- MAXIMUM DETAIL & FINISH: Include page folios (Page X of Y), header breadcrumbs, price tags, feature bullet containers, and customer review cards to give it a complete, premium agency finish.
 
 STEP-BY-STEP WORKFLOW:
 0. PREREQUISITE: Tuval Studio must be open in the browser at https://tuval.site/editor. If disconnected, open https://tuval.site/editor in the browser first.
@@ -19156,7 +19164,7 @@ mcpServer.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "svg_add",
-        description: 'Adds an SVG vector graphic, sticker, or badge to the canvas. Key can be from built-in library ("verified-badge", "sale-badge", "star-burst", "cyber-cross", "arrow-swirl", "sparkle-star", "crown-vip", "fire-flame", "quote-marks", "heart-glow", "abstract-blob") or raw SVG string.',
+        description: 'Adds an SVG vector graphic, custom icon, bespoke badge, or decorative illustration to the canvas. You are NOT bound to built-in shapes: pass raw SVG markup in the "svg" parameter (e.g. "<svg ...>...</svg>") to render ANY custom graphic, modern asset, organic shape, or vector element required for your design, or specify a built-in key ("verified-badge", "sale-badge", "star-burst", "sparkle-star", "crown-vip", etc.).',
         inputSchema: {
           type: "object",
           properties: {
@@ -19334,6 +19342,18 @@ mcpServer.setRequestHandler(ListToolsRequestSchema, async () => {
             index: { type: "number", description: "0-based page index to delete" }
           },
           required: ["index"]
+        }
+      },
+      {
+        name: "pages_reorder",
+        description: "Moves or reorders a page from one position to another in the multi-page document filmstrip.",
+        inputSchema: {
+          type: "object",
+          properties: {
+            fromIndex: { type: "number", description: "0-based source index of the page to move" },
+            toIndex: { type: "number", description: "0-based destination index where the page should be placed" }
+          },
+          required: ["fromIndex", "toIndex"]
         }
       },
       {

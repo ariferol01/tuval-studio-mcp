@@ -71,6 +71,7 @@ Add the configuration below to your AI agent's MCP settings file:
 | `pages_switch` | Switches the active canvas viewport to a specific page index (`0, 1, 2...`). |
 | `pages_duplicate` | Clones the current page layout and all layers to maintain visual consistency. |
 | `pages_delete` | Deletes a page from the document. |
+| `pages_reorder` | Moves / reorders a page from one position to another in the multi-page filmstrip. |
 | `pdf_export_catalog` | Compiles all pages into a print-ready, high-resolution multi-page PDF document. |
 
 ### 2. Canvas & Artboard Setup
