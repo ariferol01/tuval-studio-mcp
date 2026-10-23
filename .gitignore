@@ -2,5 +2,6 @@ node_modules/
 npx-check-tmp.mjs
 npx103-check-tmp.mjs
 *.log
+.npmrc
 .DS_Store
 Thumbs.db
