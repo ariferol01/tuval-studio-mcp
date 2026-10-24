@@ -18510,6 +18510,59 @@ function resolveAssetToBase64(filePathOrSrc) {
   }
   return filePathOrSrc;
 }
+function parseApidlScript(script) {
+  if (!script || typeof script !== "string") return { variables: {}, actions: [], errors: [], totalLines: 0 };
+  const clean = script.replace(/```(?:apidl|APIDL)?/g, "").replace(/```/g, "");
+  const lines = clean.split("\n");
+  const variables = {};
+  const actions = [];
+  const errors = [];
+  const interpolate = (str, vars) => {
+    if (!str || typeof str !== "string") return str;
+    return str.replace(/\{(\w+)\}/g, (match, key) => vars[key] !== void 0 ? vars[key] : match);
+  };
+  for (let rawLine of lines) {
+    let line = rawLine.trim();
+    if (!line || line.startsWith("#") || line.startsWith("//")) continue;
+    const setMatch = line.match(/^SET\s+(\w+)\s*=\s*(.*)$/i);
+    if (setMatch) {
+      const varName = setMatch[1];
+      let val = setMatch[2].trim();
+      if (val.startsWith('"') && val.endsWith('"') || val.startsWith("'") && val.endsWith("'")) {
+        val = val.slice(1, -1);
+      }
+      variables[varName] = interpolate(val, variables);
+      continue;
+    }
+    const callMatch = line.match(/^CALL\s+([\w_]+)\s*(\{.*\}|\[.*\])?$/i);
+    if (callMatch) {
+      const tool = callMatch[1];
+      let jsonStr = (callMatch[2] || "{}").trim();
+      jsonStr = interpolate(jsonStr, variables);
+      try {
+        const params = JSON.parse(jsonStr);
+        actions.push({ action: tool, params });
+      } catch (e) {
+        errors.push(`JSON error on ${tool}: ${e.message}`);
+      }
+      continue;
+    }
+    const bodyMatch = line.match(/^BODY\s+(.*)$/i);
+    if (bodyMatch) {
+      let jsonStr = interpolate(bodyMatch[1].trim(), variables);
+      try {
+        const payload = JSON.parse(jsonStr);
+        const tool = payload.tool || payload.action || payload.method;
+        const params = payload.params || payload;
+        if (params.tool) delete params.tool;
+        if (tool) actions.push({ action: tool, params });
+      } catch (e) {
+        errors.push(`JSON error on BODY: ${e.message}`);
+      }
+    }
+  }
+  return { variables, actions, errors, totalLines: lines.length };
+}
 var BRIDGE_PORT = 8765;
 var browserSocket = null;
 var pendingRequests = /* @__PURE__ */ new Map();
@@ -19703,7 +19756,10 @@ Please adjust the overlapping layer coordinates (e.g. using "text_update_style" 
       if (!script || typeof script !== "string") {
         throw new Error("APIDL script string is required.");
       }
-      const browserResponse2 = await sendToBrowser("studio_execute_apidl", { script, phase, rationale, stylePreset });
+      const apidlResult = parseApidlScript(script);
+      const browserResponse2 = await sendToBrowser("studio_batch_actions", {
+        actions: apidlResult.actions
+      });
       const content2 = [];
       if (browserResponse2.snapshot?.base64) {
         content2.push({
@@ -19716,14 +19772,13 @@ Please adjust the overlapping layer coordinates (e.g. using "text_update_style" 
       const canvasH2 = browserResponse2.snapshot?.height || 1080;
       const layerTree = Array.isArray(browserResponse2.layerTree) ? browserResponse2.layerTree : [];
       const audit = browserResponse2.layoutAudit || { issues: [], warnings: [] };
-      const apidlResult = browserResponse2.apidlResult || {};
       let report = `\u{1F3A8} [TUVAL APIDL PIPELINE - PHASE: ${phase.toUpperCase()}]
 `;
       report += `\u2022 Style Preset: ${stylePreset}
 `;
       if (rationale) report += `\u2022 Rationale: ${rationale}
 `;
-      report += `\u2022 Execution Summary: ${apidlResult.executedCount || 0} APIDL action(s) executed successfully (${apidlResult.totalLines || 0} lines parsed).
+      report += `\u2022 Execution Summary: ${apidlResult.actions.length} APIDL action(s) executed successfully (${apidlResult.totalLines} lines parsed).
 `;
       if (apidlResult.errors && apidlResult.errors.length > 0) {
         report += `\u26A0\uFE0F Script Notice: ${apidlResult.errors.join("; ")}

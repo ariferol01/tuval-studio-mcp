@@ -48,6 +48,72 @@ function resolveAssetToBase64(filePathOrSrc) {
   return filePathOrSrc;
 }
 
+/**
+ * Universal APIDL script compiler & parser
+ */
+function parseApidlScript(script) {
+  if (!script || typeof script !== 'string') return { variables: {}, actions: [], errors: [], totalLines: 0 };
+  const clean = script.replace(/```(?:apidl|APIDL)?/g, '').replace(/```/g, '');
+  const lines = clean.split('\n');
+  const variables = {};
+  const actions = [];
+  const errors = [];
+
+  const interpolate = (str, vars) => {
+    if (!str || typeof str !== 'string') return str;
+    return str.replace(/\{(\w+)\}/g, (match, key) => vars[key] !== undefined ? vars[key] : match);
+  };
+
+  for (let rawLine of lines) {
+    let line = rawLine.trim();
+    if (!line || line.startsWith('#') || line.startsWith('//')) continue;
+
+    // SET var = val
+    const setMatch = line.match(/^SET\s+(\w+)\s*=\s*(.*)$/i);
+    if (setMatch) {
+      const varName = setMatch[1];
+      let val = setMatch[2].trim();
+      if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+        val = val.slice(1, -1);
+      }
+      variables[varName] = interpolate(val, variables);
+      continue;
+    }
+
+    // CALL tool_name { ... }
+    const callMatch = line.match(/^CALL\s+([\w_]+)\s*(\{.*\}|\[.*\])?$/i);
+    if (callMatch) {
+      const tool = callMatch[1];
+      let jsonStr = (callMatch[2] || '{}').trim();
+      jsonStr = interpolate(jsonStr, variables);
+      try {
+        const params = JSON.parse(jsonStr);
+        actions.push({ action: tool, params });
+      } catch (e) {
+        errors.push(`JSON error on ${tool}: ${e.message}`);
+      }
+      continue;
+    }
+
+    // BODY { ... }
+    const bodyMatch = line.match(/^BODY\s+(.*)$/i);
+    if (bodyMatch) {
+      let jsonStr = interpolate(bodyMatch[1].trim(), variables);
+      try {
+        const payload = JSON.parse(jsonStr);
+        const tool = payload.tool || payload.action || payload.method;
+        const params = payload.params || payload;
+        if (params.tool) delete params.tool;
+        if (tool) actions.push({ action: tool, params });
+      } catch (e) {
+        errors.push(`JSON error on BODY: ${e.message}`);
+      }
+    }
+  }
+
+  return { variables, actions, errors, totalLines: lines.length };
+}
+
 /* ----------------------------------------------------
    1. LOCAL WEBSOCKET BRIDGE (Browser <-> MCP)
    ---------------------------------------------------- */
@@ -1296,7 +1362,13 @@ mcpServer.setRequestHandler(CallToolRequestSchema, async (request) => {
         throw new Error('APIDL script string is required.');
       }
 
-      const browserResponse = await sendToBrowser('studio_execute_apidl', { script, phase, rationale, stylePreset });
+      // Parse APIDL script into atomic actions
+      const apidlResult = parseApidlScript(script);
+
+      // Execute via studio_batch_actions (universally supported by browser bridge)
+      const browserResponse = await sendToBrowser('studio_batch_actions', {
+        actions: apidlResult.actions
+      });
       const content = [];
 
       // Attach high-res visual snapshot
@@ -1312,12 +1384,11 @@ mcpServer.setRequestHandler(CallToolRequestSchema, async (request) => {
       const canvasH = browserResponse.snapshot?.height || 1080;
       const layerTree = Array.isArray(browserResponse.layerTree) ? browserResponse.layerTree : [];
       const audit = browserResponse.layoutAudit || { issues: [], warnings: [] };
-      const apidlResult = browserResponse.apidlResult || {};
 
       let report = `🎨 [TUVAL APIDL PIPELINE - PHASE: ${phase.toUpperCase()}]\n`;
       report += `• Style Preset: ${stylePreset}\n`;
       if (rationale) report += `• Rationale: ${rationale}\n`;
-      report += `• Execution Summary: ${apidlResult.executedCount || 0} APIDL action(s) executed successfully (${apidlResult.totalLines || 0} lines parsed).\n`;
+      report += `• Execution Summary: ${apidlResult.actions.length} APIDL action(s) executed successfully (${apidlResult.totalLines} lines parsed).\n`;
       if (apidlResult.errors && apidlResult.errors.length > 0) {
         report += `⚠️ Script Notice: ${apidlResult.errors.join('; ')}\n`;
       }
