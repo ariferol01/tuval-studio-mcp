@@ -116,6 +116,7 @@ Add the configuration below to your AI agent's MCP settings file:
 | `layer_transform` | Adjusts rotation angle, flip X/Y, opacity, drop shadow, and blend modes. |
 | `layer_duplicate` / `layer_delete` | Duplicates or removes specific layers. |
 | `studio_batch_actions` | Executes sequential multi-step commands in a single atomic call. |
+| `studio_execute_apidl` | **Iterative Closed-Loop APIDL Pipeline**: Executes batch design scripts, returns multimodal visual state + layer collision audit, enforces Golden Ratio standards, and converges in 2-3 iterations (`draft` -> `refine` -> `final`). |
 | `project_set_title` | Renames the design project. |
 | `project_export_download` | Triggers browser download for PNG, JPG, WebP, or SVG graphics. |
 

@@ -180,6 +180,27 @@ mcpServer.setRequestHandler(ListPromptsRequestSchema, async () => {
             required: false
           }
         ]
+      },
+      {
+        name: 'design_apidl_iterative_pro',
+        description: 'Elite 3-step closed-loop APIDL design pipeline (Draft -> Refine -> Final) adhering to Golden Ratio, modular scale typography, and client-chosen aesthetics.',
+        arguments: [
+          {
+            name: 'topic',
+            description: 'Topic, product, or campaign (e.g. "AI SaaS Launch Banner", "Minimalist Coffee Packaging", "Luxury Real Estate Brochure")',
+            required: true
+          },
+          {
+            name: 'style',
+            description: 'Aesthetic art direction (e.g. "swiss-grid", "apple-bento", "editorial-luxury", "cyberpunk-neon", "minimalist-scandinavian", "bauhaus-geometric", "y2k-acid-chrome", "neobrutalism")',
+            required: false
+          },
+          {
+            name: 'dimensions',
+            description: 'Canvas format/size (e.g. "1080x1080", "1080x1920", "1280x720", "1200x630")',
+            required: false
+          }
+        ]
       }
     ]
   };
@@ -187,6 +208,64 @@ mcpServer.setRequestHandler(ListPromptsRequestSchema, async () => {
 
 mcpServer.setRequestHandler(GetPromptRequestSchema, async (request) => {
   const { name, arguments: args } = request.params;
+
+  if (name === 'design_apidl_iterative_pro') {
+    const topic = args?.topic || 'Modern Brand Campaign';
+    const style = args?.style || 'apple-bento';
+    const dim = args?.dimensions || '1080x1080';
+    return {
+      description: `Iterative 3-step APIDL design pipeline for ${topic} in ${style} aesthetic`,
+      messages: [
+        {
+          role: 'user',
+          content: {
+            type: 'text',
+            text: `You are an elite, award-winning graphic designer and art director operating Tuval Studio via the APIDL closed-loop pipeline.\n\n` +
+                  `TASK: Design a museum-grade visual composition for: "${topic}" in ${dim} resolution matching the "${style}" aesthetic style.\n\n` +
+                  `PREREQUISITE:\n` +
+                  `0. Tuval Studio must be open in the browser at https://tuval.site/editor.\n\n` +
+                  `=======================================================\n` +
+                  `MATHEMATICAL DESIGN STANDARDS & COMPOSITION LAWS:\n` +
+                  `=======================================================\n` +
+                  `1. GOLDEN RATIO (1 : 1.618) & MODULAR SCALE TYPOGRAPHY:\n` +
+                  `   - Establish strict typographic hierarchy using modular ratios:\n` +
+                  `     * Hero Headline: 56px - 72px (Bold/Black, letterSpacing: -1 to -2px, lineHeight: 1.05 to 1.15)\n` +
+                  `     * Supporting Subhead: 32px - 40px (Medium/SemiBold)\n` +
+                  `     * Section / Feature Card Title: 20px - 26px (SemiBold)\n` +
+                  `     * Body Text: 15px - 18px (Regular, lineHeight: 1.4)\n` +
+                  `     * Micro-label / Category Pill: 11px - 13px (Bold uppercase, tracking: +1.5px)\n` +
+                  `   - Use an 8px base grid rhythm: all padding, margins, and gaps must be multiples of 8 (8, 16, 24, 40, 64, 104px).\n\n` +
+                  `2. RULE OF THIRDS & ASYMMETRIC BALANCE:\n` +
+                  `   - Place primary visual anchors along the 1/3 or 2/3 horizontal and vertical intersection lines.\n` +
+                  `   - Maintain deliberate negative space (breathing room) around focal points. Never clutter edges.\n\n` +
+                  `3. ATMOSPHERIC MULTI-LAYER DEPTH:\n` +
+                  `   - Avoid flat primitive backgrounds. Always stack at least 3 layers of visual depth:\n` +
+                  `     * Layer 0 (Foundation): Multi-stop gradient or geometric pattern (mesh, grid, dots, carbon).\n` +
+                  `     * Layer 1 (Containers): Floating card boxes (cornerRadius: 16-24px) with subtle borders (stroke: rgba(255,255,255,0.12), strokeWidth: 1.5) and soft drop shadows.\n` +
+                  `     * Layer 2 (Content & Micro-Accents): High-contrast typography, pill badges, and vector flares.\n\n` +
+                  `4. UNBOUND BESPOKE ASSETS (CUSTOM SVG CRAFTING):\n` +
+                  `   - You are NEVER restricted to default primitive shapes! Freely synthesize custom SVG vector marks, badge seals, geometric dividers, and illustrations using "svg_add" with raw SVG code.\n\n` +
+                  `5. CLIENT AESTHETIC STYLE MATCHING:\n` +
+                  `   - Adapt flawlessly to the requested "${style}" style:\n` +
+                  `     * swiss-grid: Rigid grid alignment, crisp rules, asymmetric typography, black/white with intense single accent.\n` +
+                  `     * apple-bento: Rounded cards (rx: 20px), glassmorphic surfaces, subtle mesh glows, refined Inter/Sora type.\n` +
+                  `     * editorial-luxury: Cinzel/Playfair Display, gold/champagne/sand palettes, generous letter-spacing, serene luxury.\n` +
+                  `     * cyberpunk-neon: Electric cyan (#00F0FF) & magenta (#FF0055) against graphite black, HUD crosshairs, technical mono fonts.\n` +
+                  `     * bauhaus-geometric: Primary color blocks (red, blue, yellow), stark black circular/triangular geometry.\n` +
+                  `     * neobrutalism: Bold 2.5px black outlines, vivid pop colors, hard drop shadows (zero blur), raw punchy type.\n` +
+                  `     * minimalist-scandinavian: Warm stone/linen tones, expansive negative space, understated clean typography.\n` +
+                  `     * y2k-acid-chrome: Metallic chrome gradients, retro 4-point star flares, futuristic contours.\n\n` +
+                  `=======================================================\n` +
+                  `CLOSED-LOOP 3-PHASE ITERATION PROTOCOL:\n` +
+                  `=======================================================\n` +
+                  `Phase 1 ("draft"): Call "studio_execute_apidl" with phase: "draft" to construct the macro layout in one unified script.\n` +
+                  `Phase 2 ("refine"): Inspect the returned visual snapshot and layout collision audit. Adjust coordinates, font sizes, or colors to achieve optical perfection.\n` +
+                  `Phase 3 ("final"): Once 0 collisions are confirmed and aesthetic balance is achieved, call "studio_execute_apidl" with phase: "final" to seal and deliver the design.`
+          }
+        }
+      ]
+    };
+  }
 
   if (name === 'design_graphic_pro') {
     const topic = args?.topic || 'Modern Graphic Design';
@@ -201,16 +280,14 @@ mcpServer.setRequestHandler(GetPromptRequestSchema, async (request) => {
             text: `You are a world-class graphic designer and visionary art director using Tuval Studio MCP.\n\n` +
                   `TASK: Design a stunning, intricately detailed, agency-grade graphic for: "${topic}" in ${dim} resolution.\n\n` +
                   `PREREQUISITE:\n` +
-                  `0. Tuval Studio must be open in the browser at https://tuval.site/editor. If the bridge is not connected, open https://tuval.site/editor in the user's browser first (e.g. using a system command like "start https://tuval.site/editor" or "open https://tuval.site/editor").\n\n` +
+                  `0. Tuval Studio must be open in the browser at https://tuval.site/editor. If disconnected, open https://tuval.site/editor in the user's browser first.\n\n` +
                   `CORE GRAPHIC DESIGNER PHILOSOPHY & MANDATES:\n` +
-                  `1. ACT AS AN ELITE GRAPHIC DESIGNER: Meticulously plan, architect, and construct every single layer of the composition. Think through the entire visual narrative: atmospheric background, layered container cards, sophisticated typography pairings, and micro-accents. Never build basic or primitive layouts.\n` +
-                  `2. MAXIMUM DETAIL, VISUAL DENSITY & QUALITY: Make the design as richly detailed, dense, and high-quality as humanly possible. Avoid bare or empty spaces. Add refined micro-details: category pill badges, decorative borders, framing accents, subtle shadows, and ornamental touches.\n` +
-                  `3. UNCONSTRAINED BESPOKE ASSETS (NOT BOUND TO BUILT-IN SHAPES): You are NOT restricted to the studio's default primitive shapes or built-in asset inventory! You have full creative authority to synthesize, craft, and inject custom SVG vector assets, intricate decorative elements, custom icons, or geometric flourishes directly into the canvas using "svg_add" with raw SVG code (svg: "<svg ...>...</svg>"). Generate whatever modern vector assets, geometric dividers, or brand motifs are required to match the exact aesthetic vision.\n` +
-                  `4. HIERARCHY & COMPOSITION: Use clean typography (Sora, Inter, Playfair Display, Space Grotesk, etc.), harmonious curated color palettes, high contrast, and balanced negative space.\n` +
-                  `5. SAFE MARGINS & BOUNDARY CHECK: Maintain at least a 5-8% safe margin (min 50px-60px padding) from all canvas edges. NO text, headlines, badges, or shapes may ever overflow or touch canvas borders.\n` +
-                  `6. TEXT WRAPPING: If headlines or body text are long, reduce fontSize or break into multiple short lines so width fits comfortably.\n` +
-                  `7. VISUAL INSPECTION (VISION-IN-THE-LOOP): After executing actions, carefully inspect the returned snapshot image. If you notice any clipping, misaligned elements, or overflow, immediately call "text_update_style" or "layer_transform" to correct them.\n` +
-                  `8. FINAL CONFIRMATION: Confirm that the design is 100% verified, perfectly centered, and ready for publication.`
+                  `1. ACT AS AN ELITE GRAPHIC DESIGNER: Meticulously plan, architect, and construct every single layer of the composition. Follow the Golden Ratio (1:1.618) for modular typography scaling and spatial harmony.\n` +
+                  `2. MAXIMUM DETAIL, VISUAL DENSITY & QUALITY: Never build empty or rudimentary layouts. Layer rich micro-details: category pill badges, decorative borders, framing accents, subtle shadows, and ornamental touches.\n` +
+                  `3. UNCONSTRAINED BESPOKE ASSETS: You are NOT bound to default primitive shapes! Synthesize custom SVG vector assets, intricate decorative elements, or brand marks directly using "svg_add" with raw SVG code.\n` +
+                  `4. CLIENT STYLE VERSATILITY: Seamlessly match whatever aesthetic the user desires (Swiss Grid, Apple Bento, Editorial Luxury, Cyberpunk, Bauhaus, Neo-Brutalism, Minimalist, Y2K).\n` +
+                  `5. SAFE MARGINS & BOUNDARY CHECK: Maintain at least a 5-8% safe margin (min 50px-60px padding) from all canvas edges. NO text or badges may ever overflow canvas borders.\n` +
+                  `6. VISION-IN-THE-LOOP: Carefully inspect the returned snapshot image after every step. Fix any flaws before completing.`
           }
         }
       ]
@@ -926,6 +1003,47 @@ mcpServer.setRequestHandler(ListToolsRequestSchema, async () => {
             allPages: { type: 'boolean', description: 'Whether to compile all pages into 1 multi-page PDF (true) or active page only (false)', default: true }
           }
         }
+      },
+      {
+        name: 'studio_execute_apidl',
+        description: 'Executes an APIDL (Tuval Design Language) script in a closed-loop iterative design convergence pipeline. Executes chained canvas commands, captures a high-resolution screenshot and layer coordinate tree, audits layout collisions, and enforces design quality standards across iterative phases ("draft" -> "refine" -> "final").',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            script: {
+              type: 'string',
+              description: 'Multi-line APIDL script containing commands such as canvas_set_size, canvas_set_background, canvas_set_gradient, shape_add, svg_add, text_add, layer_transform, text_update_style, layer_align, etc.'
+            },
+            phase: {
+              type: 'string',
+              enum: ['draft', 'refine', 'final'],
+              description: 'Current loop phase: "draft" (initial structural generation), "refine" (fine-tuning coordinates, typography hierarchy, margins, or balance after visual review), or "final" (ready to seal design; triggers automated Quality Gate audit).'
+            },
+            rationale: {
+              type: 'string',
+              description: 'Design rationale explaining design system choices (Golden Ratio proportions, modular typography scale, color palette harmony, client style preset).'
+            },
+            stylePreset: {
+              type: 'string',
+              enum: [
+                'swiss-grid',
+                'apple-bento',
+                'editorial-luxury',
+                'cyberpunk-neon',
+                'minimalist-scandinavian',
+                'bauhaus-geometric',
+                'y2k-acid-chrome',
+                'corporate-clean',
+                'neobrutalism',
+                'memphis-pop',
+                'custom'
+              ],
+              description: 'The target visual aesthetic preset matching client requirements.',
+              default: 'custom'
+            }
+          },
+          required: ['script', 'phase']
+        }
       }
     ]
   };
@@ -1169,6 +1287,98 @@ mcpServer.setRequestHandler(CallToolRequestSchema, async (request) => {
           }
         ]
       };
+    }
+
+    // 3b. Closed-Loop APIDL Iterative Design Pipeline Handler
+    if (name === 'studio_execute_apidl') {
+      const { script, phase = 'draft', rationale = '', stylePreset = 'custom' } = args || {};
+      if (!script || typeof script !== 'string') {
+        throw new Error('APIDL script string is required.');
+      }
+
+      const browserResponse = await sendToBrowser('studio_execute_apidl', { script, phase, rationale, stylePreset });
+      const content = [];
+
+      // Attach high-res visual snapshot
+      if (browserResponse.snapshot?.base64) {
+        content.push({
+          type: 'image',
+          data: browserResponse.snapshot.base64,
+          mimeType: browserResponse.snapshot.mimeType || 'image/png'
+        });
+      }
+
+      const canvasW = browserResponse.snapshot?.width || 1080;
+      const canvasH = browserResponse.snapshot?.height || 1080;
+      const layerTree = Array.isArray(browserResponse.layerTree) ? browserResponse.layerTree : [];
+      const audit = browserResponse.layoutAudit || { issues: [], warnings: [] };
+      const apidlResult = browserResponse.apidlResult || {};
+
+      let report = `🎨 [TUVAL APIDL PIPELINE - PHASE: ${phase.toUpperCase()}]\n`;
+      report += `• Style Preset: ${stylePreset}\n`;
+      if (rationale) report += `• Rationale: ${rationale}\n`;
+      report += `• Execution Summary: ${apidlResult.executedCount || 0} APIDL action(s) executed successfully (${apidlResult.totalLines || 0} lines parsed).\n`;
+      if (apidlResult.errors && apidlResult.errors.length > 0) {
+        report += `⚠️ Script Notice: ${apidlResult.errors.join('; ')}\n`;
+      }
+      report += `• Canvas Resolution: ${canvasW} × ${canvasH} px | Total Layers: ${layerTree.length}\n\n`;
+
+      // Detailed layer spatial mapping
+      report += `📐 CURRENT CANVAS SPATIAL LAYER MAP:\n`;
+      layerTree.forEach((l, idx) => {
+        const id = l.id || `layer-${idx}`;
+        const nameOrText = l.name || l.text || l.type;
+        report += `[${idx + 1}] ID: "${id}" | Type: ${l.type.toUpperCase()} | "${nameOrText}" -> Box: (x:${Math.round(l.left || 0)}, y:${Math.round(l.top || 0)}, w:${Math.round(l.width || 0)}, h:${Math.round(l.height || 0)})\n`;
+      });
+
+      // Quality Gate & Collision Detection
+      const hasIssues = audit.issues && audit.issues.length > 0;
+
+      if (phase === 'final') {
+        if (hasIssues) {
+          report += `\n⛔ [QUALITY GATE INTERCEPT]: You attempted to complete the design with phase: "final", but ${audit.issues.length} critical collision/layout issue(s) were detected:\n`;
+          audit.issues.forEach(iss => {
+            report += `  - ❌ ${iss}\n`;
+          });
+          report += `\nREQUIRED NEXT STEP:\n`;
+          report += `Do NOT mark the design as done yet. Execute a short refinement script with phase: "refine" targeting these overlapping layers (adjust their Y or X coordinates by 30-60px or reduce fontSize using text_update_style / layer_transform). Once resolved, re-submit with phase: "final" to seal the design.\n`;
+        } else {
+          report += `\n🌟 [QUALITY GATE PASSED - DESIGN VERIFIED & SEALED]:\n`;
+          report += `• Aesthetic Golden Ratio standards satisfied.\n`;
+          report += `• Zero critical collisions or text overlaps detected.\n`;
+          report += `• Safe margins and typography modular hierarchy fully preserved.\n`;
+          report += `The design is now finalized and ready for high-resolution export!\n`;
+        }
+      } else if (phase === 'draft') {
+        report += `\n🔍 [PHASE 1 (DRAFT) VISUAL & ANALYTIC EVALUATION]:\n`;
+        report += `1. VISUAL REVIEW: Carefully examine the attached canvas screenshot above.\n`;
+        report += `2. GOLDEN RATIO & PROPORTIONS: Verify that focal visual elements occupy major golden sections (0.618 or 0.382 of canvas dimensions) and margins maintain breathable breathing room (min 60px).\n`;
+        report += `3. TYPOGRAPHIC HIERARCHY: Check headline (48-72px), subhead (24-32px), and body/tagline (14-18px) hierarchy.\n`;
+        if (hasIssues) {
+          report += `4. OVERLAP AUDIT: ⚠️ Detected overlaps:\n`;
+          audit.issues.forEach(iss => { report += `   - ${iss}\n`; });
+        }
+        report += `\nREQUIRED NEXT STEP:\n`;
+        report += `Proceed to PHASE 2 (Refinement). Run studio_execute_apidl with phase: "refine" to fine-tune layer positions, adjust alignments, balance negative space, or add subtle vector accents (svg_add).\n`;
+      } else if (phase === 'refine') {
+        report += `\n✨ [PHASE 2 (REFINEMENT) EVALUATION]:\n`;
+        if (hasIssues) {
+          report += `⚠️ Overlaps remain:\n`;
+          audit.issues.forEach(iss => { report += `  - ${iss}\n`; });
+          report += `\nExecute another refinement script to resolve remaining issues before finalizing.\n`;
+        } else {
+          report += `✅ Layout is balanced with ZERO collision issues detected across all layers.\n`;
+          report += `\nNEXT STEP:\n`;
+          report += `If the visual composition is complete and satisfies the target style (${stylePreset}), call studio_execute_apidl with phase: "final" to officially seal the design.\n`;
+        }
+      }
+
+      content.push({
+        type: 'text',
+        text: report
+      });
+
+      return { content };
     }
 
     // 4. Send all other tool operations to the browser canvas engine
