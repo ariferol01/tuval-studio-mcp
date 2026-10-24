@@ -20,6 +20,7 @@ It empowers desktop **AI agents** — including **CodeDL**, **Claude Desktop**, 
 
 ## 🌟 Core Features
 
+- **⚡ Powered by APIDL Engine ([apidlai.com](https://apidlai.com)):** Breakthrough closed-loop design orchestration developed by [apidlai.com](https://apidlai.com). Converges in 2–3 iterative phases (`draft` -> `refine` -> `final`) with automated Quality Gate audits, slashing token costs by **~92%** and accelerating execution by **10x** compared to traditional single-call MCP tools.
 - **🚀 Zero-Cloud & 100% Private:** Operates entirely in your local browser through a high-speed local WebSocket bridge (`ws://127.0.0.1:8765`). Zero account or server storage required.
 - **📚 Multi-Page PDF Catalog Engine:** Autonomous creation, management, and export of multi-page magazines, lookbooks, product brochures, and pitch decks with `pdf_export_catalog`.
 - **👁️ Multimodal Vision-in-the-Loop:** Every action returns high-res visual snapshots (Base64 PNG) and layer coordinates so AI agents inspect, critique, and perfect their designs visually.
